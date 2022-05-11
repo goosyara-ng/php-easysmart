@@ -12,5 +12,13 @@ Supported switches:
 * TL-SG1016DE (tested)
 * TL-SG1024DE (tested)
 
+## API versions
+The library supports two version of HTTP API (based on hardware versions):
+* 1 - REV V1 (only TL-SG1016DE and TL-SG1024DE)
+* 2 - REV V2 and later
+
+The switch models TL-SG105E and TL-SG108E of the first hardware revision can be managed only by binary protocol (see Alternatives).
+
+## Alternatives
 Python alternative (binary protocol):
 * https://github.com/pklaus/smrt/
