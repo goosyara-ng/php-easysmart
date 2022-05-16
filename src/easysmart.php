@@ -108,6 +108,8 @@ class TpLinkEasySmart {
                 throw new Exception('Unsupported hardware version - REV V1 (E)'); // REV V1 (E) 5 & 8 port switches
             }
             $logon_info = json_decode( $js_vars['logonInfo'] );
+            if( intval($logon_info[0]) == 3 )
+                throw new Exception('Device busy');
             if( intval($logon_info[0]) == 0 )
                 $this->logon_status = true;
             else
@@ -115,7 +117,7 @@ class TpLinkEasySmart {
         }
     }
     
-    private function logout() {
+    public function logout() {
         $js_vars = TpLinkEasySmart::parse_js(
             TpLinkEasySmart::extract_js( $this->get('/Logout.htm') )
         );
