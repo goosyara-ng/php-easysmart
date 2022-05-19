@@ -58,12 +58,6 @@ class TpLinkEasySmart {
                 return $this->vlans_v2(); break;
         }
     }
-    
-    public function fdb() {
-        if(!$this->logon_status)
-            throw new Exception('Session timed out');
-        return array(); // There is still no working FDB API in REV 1-6
-    }
 
     //
     // Easy Smart methods
