@@ -1,21 +1,21 @@
 <?php
 /**
- * TP-Link Easy Smart status fetcher for UserSide ERP (PHP version)
- *
- * LICENSE: The software is provided "AS IS", without warranty of any kind,
-   express or implied, including but not limited to the warranties of
-   merchantability, fitness for a particular purpose and noninfringement.
-   In no event shall the authors or copyright holders be liable for any claim,
-   damages or other liability, whether in an action of contract, tort or
-   otherwise, arising from, out of or in connection with the software or the 
-   use or other dealings in the software.
- *
- * @package    php-easysmart
- * @author     Illia Malinich
- * @author     Pavlo Malinich
- * @author     Mykola Tomchuk
- * @link       https://github.com/goosyara-ng/php-easysmart
- */
+  * TP-Link Easy Smart status fetcher for UserSide ERP (PHP version)
+  *
+  * LICENSE: The software is provided "AS IS", without warranty of any kind,
+    express or implied, including but not limited to the warranties of
+    merchantability, fitness for a particular purpose and noninfringement.
+    In no event shall the authors or copyright holders be liable for any claim,
+    damages or other liability, whether in an action of contract, tort or
+    otherwise, arising from, out of or in connection with the software or the 
+    use or other dealings in the software.
+  *
+  * @package    php-easysmart
+  * @author     Illia Malinich
+  * @author     Pavlo Malinich
+  * @author     Mykola Tomchuk
+  * @link       https://github.com/goosyara-ng/php-easysmart
+  */
 
 class TpLinkEasySmart {
     private $api_version = 0;
@@ -23,6 +23,7 @@ class TpLinkEasySmart {
     private $port_middle_num = 0;
     private $max_port_num = 0;
     private $port_type = "geth";
+    private $oneshot;
     private $host;
 
     //
@@ -30,7 +31,7 @@ class TpLinkEasySmart {
     //
     
     public static function create($host, $username, $password) {
-        return new TpLinkEasySmart($host, $username, $password);
+        return new TpLinkEasySmart($host, $username, $password, true);
     }
 
     public function interfaces() {
@@ -63,9 +64,14 @@ class TpLinkEasySmart {
     // Easy Smart methods
     //
 
-    public function __construct($host, $username, $password) {
+    public function __construct($host, $username, $password, $oneshot = false) {
         $this->host = $host;
+        $this->oneshot = $oneshot;
         $this->login($username, $password);
+    }
+    
+    public function __destruct() {
+        if($this->oneshot) $this->logout();
     }
 
     private function login($username, $password) {
